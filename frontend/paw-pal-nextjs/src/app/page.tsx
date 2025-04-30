@@ -32,15 +32,12 @@ export default function Home() {
 
         {/* Buttons */}
         <div className="w-full max-w-md flex flex-col gap-4 px-4">
-          <button className="w-full py-3 bg-white text-black rounded-3xl font-medium hover:bg-gray-100 transition-colors cursor-pointer shadow-md hover:shadow-lg">
-            Sign in with Google
-          </button>
-          <button className="w-full py-3 bg-blue-900 text-white rounded-3xl font-medium hover:bg-blue-950 transition-colors cursor-pointer shadow-md hover:shadow-lg">
+          <button className="w-full py-3 bg-amber-700 text-white rounded-3xl font-bold hover:bg-amber-800 transition-colors cursor-pointer shadow-md hover:shadow-lg">
             Create Account
           </button>
-          <button className="w-full py-3 bg-amber-700 text-white rounded-3xl font-medium hover:bg-amber-800 transition-colors cursor-pointer shadow-md hover:shadow-lg">
-            Sign In
-          </button>
+          <p className="text-white text-center cursor-pointer hover:underline font-bold">
+            Sign in
+          </p>
         </div>
       </div>
     </div>
