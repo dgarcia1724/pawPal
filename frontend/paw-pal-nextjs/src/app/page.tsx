@@ -1,6 +1,11 @@
+"use client";
+
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
+  const router = useRouter();
+
   return (
     <div className="relative w-full h-screen">
       {/* Background Image */}
@@ -35,7 +40,10 @@ export default function Home() {
           <button className="w-full py-3 bg-amber-700 text-white rounded-3xl font-bold hover:bg-amber-800 transition-colors cursor-pointer shadow-md hover:shadow-lg">
             Create Account
           </button>
-          <p className="text-white text-center cursor-pointer hover:underline font-bold">
+          <p
+            onClick={() => router.push("/signin")}
+            className="text-white text-center cursor-pointer hover:underline font-bold"
+          >
             Sign in
           </p>
         </div>
