@@ -37,7 +37,10 @@ export default function Home() {
 
         {/* Buttons */}
         <div className="w-full max-w-md flex flex-col gap-4 px-4">
-          <button className="w-full py-3 bg-amber-700 text-white rounded-3xl font-bold hover:bg-amber-800 transition-colors cursor-pointer shadow-md hover:shadow-lg">
+          <button
+            onClick={() => router.push("/onboarding/email")}
+            className="w-full py-3 bg-amber-700 text-white rounded-3xl font-bold hover:bg-amber-800 transition-colors cursor-pointer shadow-md hover:shadow-lg"
+          >
             Create Account
           </button>
           <p

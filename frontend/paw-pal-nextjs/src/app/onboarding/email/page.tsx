@@ -3,15 +3,15 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-export default function Login() {
+export default function EmailPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: Implement login logic
-    console.log("Login attempt with:", { email, password });
+    // TODO: Implement signup logic
+    console.log("Signup attempt with:", { email, password });
   };
 
   return (
@@ -25,12 +25,13 @@ export default function Login() {
       <div className="flex-1 flex flex-col items-center justify-center px-4">
         <div className="w-full max-w-md">
           <h2 className="text-2xl font-bold text-black text-center mb-8">
-            Welcome back
+            Create your account
           </h2>
 
           {/* Google Sign In Button */}
           <button
             type="button"
+            onClick={() => router.push("/onboarding/your-info/name")}
             className="w-full py-3 bg-white text-black rounded-lg font-semibold hover:bg-gray-50 transition-colors border border-gray-300 flex items-center justify-center gap-3 mb-6 cursor-pointer"
           >
             <svg
@@ -55,7 +56,7 @@ export default function Login() {
                 fill="#EA4335"
               />
             </svg>
-            Sign in with Google
+            Continue with Google
           </button>
 
           <div className="relative mb-6">
@@ -101,27 +102,28 @@ export default function Login() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-700 focus:border-transparent transition-colors text-black"
-                placeholder="Enter your password"
+                placeholder="Create a password"
                 required
               />
             </div>
 
             <button
               type="submit"
+              onClick={() => router.push("/onboarding/your-info/name")}
               className="w-full py-3 bg-amber-700 text-white rounded-lg font-semibold hover:bg-amber-800 transition-colors cursor-pointer"
             >
-              Sign In
+              Continue
             </button>
           </form>
 
           <div className="mt-6 text-center">
             <p className="text-sm text-black">
-              Don&apos;t have an account?{" "}
+              Already have an account?{" "}
               <button
-                onClick={() => router.push("/onboarding/email")}
+                onClick={() => router.push("/signin")}
                 className="text-amber-700 hover:text-amber-800 font-semibold cursor-pointer"
               >
-                Create Account
+                Sign in
               </button>
             </p>
           </div>
