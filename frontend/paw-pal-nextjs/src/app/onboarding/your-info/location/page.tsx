@@ -8,18 +8,16 @@ export default function LocationPage() {
   const [location, setLocation] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const mapContainerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
+  const autocompleteRef = useRef<google.maps.places.Autocomplete | null>(null);
 
   useEffect(() => {
-    let map: google.maps.Map | null = null;
-    let autocomplete: google.maps.places.Autocomplete | null = null;
-    let marker: google.maps.Marker | null = null;
+    let isMounted = true;
 
-    const initMap = async () => {
+    const initAutocomplete = async () => {
       try {
-        if (!mapContainerRef.current) return;
+        if (!inputRef.current) return;
 
         const loader = new Loader({
           apiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || "",
@@ -29,81 +27,42 @@ export default function LocationPage() {
 
         await loader.load();
 
-        // Create a new div for the map
-        const mapDiv = document.createElement("div");
-        mapDiv.style.width = "100%";
-        mapDiv.style.height = "100%";
-        mapContainerRef.current.appendChild(mapDiv);
-
-        // Initialize map
-        map = new google.maps.Map(mapDiv, {
-          center: { lat: 37.0902, lng: -95.7129 },
-          zoom: 4,
-          disableDefaultUI: true,
-          styles: [
-            {
-              featureType: "all",
-              elementType: "labels",
-              stylers: [{ visibility: "off" }],
-            },
-          ],
-        });
+        if (!isMounted) return;
 
         // Initialize Autocomplete
-        if (inputRef.current) {
-          autocomplete = new google.maps.places.Autocomplete(inputRef.current, {
+        autocompleteRef.current = new google.maps.places.Autocomplete(
+          inputRef.current,
+          {
             types: ["(cities)"],
             componentRestrictions: { country: "us" },
-          });
+          }
+        );
 
-          // Handle place selection
-          autocomplete.addListener("place_changed", () => {
-            const place = autocomplete?.getPlace();
-            if (place?.geometry?.location && map) {
-              const location = place.geometry.location;
-              map.setCenter(location);
-              map.setZoom(12);
+        autocompleteRef.current.addListener("place_changed", () => {
+          const place = autocompleteRef.current?.getPlace();
+          if (place?.formatted_address) {
+            setLocation(place.formatted_address);
+            setError(null);
+          }
+        });
 
-              // Remove existing marker if it exists
-              if (marker) {
-                marker.setMap(null);
-              }
-
-              // Create new marker
-              marker = new google.maps.Marker({
-                position: location,
-                map: map,
-                animation: google.maps.Animation.DROP,
-              });
-              setLocation(place.formatted_address || "");
-              setError(null);
-            }
-          });
-        }
-      } catch (err) {
-        console.error("Error loading Google Maps:", err);
-        setError("Failed to load map. Please try again later.");
-      } finally {
         setIsLoading(false);
+      } catch (err) {
+        console.error("Error loading Google Places:", err);
+        if (isMounted) {
+          setError("Failed to load location search. Please try again later.");
+          setIsLoading(false);
+        }
       }
     };
 
-    initMap();
+    initAutocomplete();
 
     // Cleanup function
     return () => {
-      if (marker) {
-        marker.setMap(null);
-      }
-      if (autocomplete) {
-        google.maps.event.clearInstanceListeners(autocomplete);
-      }
-      if (map) {
-        google.maps.event.clearInstanceListeners(map);
-      }
-      // Clear the map container
-      if (mapContainerRef.current) {
-        mapContainerRef.current.innerHTML = "";
+      isMounted = false;
+      if (autocompleteRef.current) {
+        autocompleteRef.current = null;
       }
     };
   }, []);
@@ -135,18 +94,6 @@ export default function LocationPage() {
           </p>
 
           <form onSubmit={handleSubmit} className="space-y-6">
-            {/* Map Preview */}
-            <div
-              ref={mapContainerRef}
-              className="w-full h-48 bg-gray-100 rounded-lg mb-4 relative"
-            >
-              {isLoading && (
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-amber-700"></div>
-                </div>
-              )}
-            </div>
-
             {error && <p className="text-red-500 text-center mb-4">{error}</p>}
 
             {/* Location Input */}

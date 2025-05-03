@@ -1,18 +1,23 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 
 export default function BioPage() {
   const [bio, setBio] = useState("");
   const router = useRouter();
+  const mapInitializedRef = useRef(false);
+  const mapContainerRef = useRef<HTMLDivElement>(null);
+  const mapRef = useRef<google.maps.Map | null>(null);
+  const markerRef = useRef<google.maps.Marker | null>(null);
+  const autocompleteRef = useRef<google.maps.places.Autocomplete | null>(null);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (bio.trim()) {
       // TODO: Save bio to state/backend
       console.log("Bio submitted:", bio);
-      router.push("/onboarding/your-info/birthday");
+      router.push("/onboarding/your-dog/name");
     }
   };
 

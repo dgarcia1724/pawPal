@@ -3,16 +3,16 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-export default function NamePage() {
+export default function DogNamePage() {
   const [name, setName] = useState("");
   const router = useRouter();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (name.trim()) {
-      // TODO: Save name to state/backend
-      console.log("Name submitted:", name);
-      router.push("/onboarding/your-info/photo");
+      // TODO: Save dog name to state/backend
+      console.log("Dog name submitted:", name);
+      router.push("/onboarding/your-dog/breed");
     }
   };
 
@@ -27,10 +27,10 @@ export default function NamePage() {
       <div className="flex-1 flex flex-col items-center justify-center px-4">
         <div className="w-full max-w-md">
           <h2 className="text-2xl font-bold text-black text-center mb-2">
-            What's your name?
+            What's your dog's name?
           </h2>
           <p className="text-gray-500 text-center mb-8">
-            Enter your name to get started
+            Enter your dog's name to get started
           </p>
 
           <form onSubmit={handleSubmit} className="space-y-6">
@@ -41,7 +41,7 @@ export default function NamePage() {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-amber-700 focus:outline-none transition-colors text-black"
-                placeholder="Enter your name"
+                placeholder="Enter your dog's name"
                 required
                 autoFocus
               />
