@@ -113,7 +113,7 @@ export default function LocationPage() {
     if (location.trim()) {
       // TODO: Save location to state/backend
       console.log("Location submitted:", location);
-      router.push("/onboarding/your-info/birthday");
+      router.push("/onboarding/your-info/bio");
     }
   };
 
