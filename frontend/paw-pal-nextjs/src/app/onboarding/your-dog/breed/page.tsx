@@ -32,7 +32,7 @@ export default function BreedPage() {
     if (breed.trim()) {
       // TODO: Save breed to state/backend
       console.log("Breed submitted:", breed);
-      router.push("/onboarding/your-dog/photos");
+      router.push("/onboarding/your-dog/age");
     }
   };
 
@@ -82,7 +82,7 @@ export default function BreedPage() {
                   <button
                     key={popularBreed}
                     onClick={() => handleBreedSelect(popularBreed)}
-                    className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-100 transition-colors text-black text-left"
+                    className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-100 transition-colors text-black text-left cursor-pointer hover:border-amber-700"
                   >
                     {popularBreed}
                   </button>
