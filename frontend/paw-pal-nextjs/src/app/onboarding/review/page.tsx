@@ -8,7 +8,7 @@ export default function ReviewPage() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // TODO: Save all onboarding data to backend
-    router.push("/dashboard");
+    router.push("/onboarding/loading");
   };
 
   return (
